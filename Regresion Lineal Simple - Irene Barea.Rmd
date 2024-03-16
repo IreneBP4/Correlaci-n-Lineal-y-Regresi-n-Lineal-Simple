@@ -1,0 +1,148 @@
+---
+title: "Regresion Lineal Simple"
+author: "irene"
+date: "2024-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1 - Si pretendiésemos explicar un suceso y/o fenómeno acontecido en el pasado ¿Podemos inferir la respuesta asociada a dichos eventos en base a los restos materiales presentes?
+Sí, es posible inferir respuestas sobre eventos pasados utilizando restos materiales presentes, como artefactos, fósiles o estratos geológicos. Sin embargo, esto requiere un análisis cuidadoso y basado en métodos científicos rigurosos, como la datación, el análisis químico y la interpretación contextual. Aunque las interpretaciones pueden ser especulativas y sujetas a cambios, los restos materiales proporcionan una ventana importante para comprender el pasado.
+
+#2 - Haciendo referencia al análisis de correlación lineal de Pearson, ¿establece este algún tipo de relación causa-efecto de una variable sobre otra(s)?
+El análisis de correlación lineal de Pearson no implica una relación causa-efecto entre variables. En cambio, evalúa la fuerza y la dirección de la asociación lineal entre dos variables cuantitativas. Mientras que un coeficiente de correlación cercano a 1 o -1 indica una fuerte relación lineal positiva o negativa, respectivamente, no proporciona información sobre la dirección de la causalidad. Es decir, no establece si una variable causa cambios en la otra o si ambas están influenciadas por un tercer factor. Por lo tanto, aunque la correlación es útil para identificar asociaciones, la determinación de relaciones causales requiere evidencia adicional y métodos de investigación específicos.
+
+#3 - Define causalidad. Exponga algún ejemplo.
+La causalidad se refiere a la relación entre dos eventos, donde uno es la causa directa del otro. En otras palabras, implica que la presencia o cambio en un evento (llamado causa) conduce a un cambio observable en otro evento (llamado efecto). Por ejemplo, la relación entre fumar cigarrillos y el desarrollo de cáncer de pulmón es un ejemplo claro de causalidad. Numerosos estudios han demostrado que fumar aumenta significativamente el riesgo de cáncer de pulmón, estableciendo una conexión causal entre el hábito de fumar y la enfermedad. La causalidad implica una relación consistente y repetible entre la causa y el efecto, respaldada por evidencia científica sólida.
+
+#4 - ¿Podrías mencionar los parámetros involucrados en la ecuación de regresión lineal?
+En la ecuación de regresión lineal, los parámetros son el intercepto (b0) y los coeficientes de pendiente (b1, b2, ..., bn) para cada variable independiente. Estos parámetros determinan la posición y la pendiente de la línea de regresión, representando el valor esperado de la variable dependiente y el cambio esperado en ella por unidad de cambio en las variables independientes, respectivamente.
+
+#5 - En un plano cartesiano, si afirmo que el eje ‘x’ también se denomina eje de ordenadas, ¿estoy en lo cierto?
+No, no es correcto. En un plano cartesiano, el eje de las x se denomina "eje de abscisas" o "eje horizontal", mientras que el eje de las y se denomina "eje de ordenadas" o "eje vertical". Es importante recordar que el eje de abscisas representa las variables independientes y el eje de ordenadas representa las variables dependientes en un sistema de coordenadas cartesianas.
+
+#6 - ¿Sabrías diferenciar entre recta de regresión y plano de regresión?
+   1. **Recta de Regresión:**
+   - Se usa en regresión lineal simple o múltiple.
+   - Es una línea recta que mejor se ajusta a los datos en 2D o 3D.
+   - Para regresión simple, es \( \hat{y} = b_0 + b_1 x \).
+   - Para regresión múltiple, es un plano con una ecuación similar pero con múltiples variables.
+
+    2. **Plano de Regresión:**
+   - Se emplea en regresión lineal múltiple.
+   - Es una superficie plana que mejor se ajusta a los datos en 3D.
+   - Se forma al combinar múltiples variables independientes para predecir una variable      dependiente.
+   - Su ecuación es \( \hat{y} = b_0 + b_1 x_1 + b_2 x_2 + ... + b_n x_n \).
+   
+#7 - ¿Cuáles son los supuestos (o hipótesis) del análisis de regresión lineal?
+Los supuestos del análisis de regresión lineal son:
+1. Linealidad: La relación entre las variables es lineal.
+2. Independencia de errores: Los errores no están correlacionados entre sí.
+3. Homocedasticidad: La varianza de los errores es constante.
+4. Normalidad de errores: Los errores siguen una distribución normal.
+5. Ausencia de multicolinealidad: No hay una relación lineal perfecta entre las variables independientes.
+
+#8 - Dados los siguientes datos, calcula la recta de regresión que mejor se adapte a nuestra nube de puntos siendo “cuentas” la variable dependiente o de respuesta y “distancia” la variable independiente o explicativa. 
+```{r}
+# Datos
+distancia <- c(1.1, 100.2, 90.3, 5.4, 57.5, 6.6, 34.7, 65.8, 57.9, 86.1)
+cuentas <- c(110, 2, 6, 98, 40, 94, 31, 5, 8, 10)
+
+# Calcular la recta de regresión
+regression <- lm(cuentas ~ distancia)
+
+# Imprimir los coeficientes de la recta de regresión
+summary(regression)
+```
+#9 - ¿Serías capaz de interpretar el significado de los parámetros de la ecuación de regresión?
+Interpretación de los parámetros:
+ - Intercepto (b0): Es el valor de la variable dependiente cuando la variable independiente  es cero.
+- Coeficiente de Pendiente (b1): Indica cuánto cambia la variable dependiente por cada unidad de cambio en la variable independiente.
+En resumen, el intercepto indica dónde corta la línea de regresión el eje vertical cuando la variable independiente es cero, mientras que el coeficiente de pendiente indica la tasa de cambio de la variable dependiente con respecto a la variable independiente.
+
+#10 - ¿Qué implicaciones conlleva obtener un intercepto con valor ‘0’?
+Un intercepto con valor '0' implica que cuando la variable independiente es cero, la variable dependiente también lo es. Esto puede tener implicaciones en la interpretación del modelo y en la validez de las predicciones. Por ejemplo, podría indicar que el modelo no es adecuado para ciertos rangos de valores o que la relación entre las variables no es lineal en todo el rango de observaciones.
+
+#11 - ¿Qué ponderación lleva a cabo el análisis de regresión lineal para calcular los valores de los parámetros que configuran la recta de regresión?
+El análisis de regresión lineal utiliza el método de mínimos cuadrados para calcular los valores de los parámetros que configuran la recta de regresión. Este método minimiza la suma de los cuadrados de las diferencias entre los valores observados de la variable dependiente y los valores predichos por la recta de regresión. En otras palabras, el objetivo es encontrar la recta que mejor se ajuste a los datos al minimizar la suma de los errores al cuadrado. Esto se logra calculando los valores de los parámetros (el intercepto y la pendiente) que minimizan esta suma de cuadrados de errores.
+
+#12 - ¿Cuál sería el error asociado a mi modelo en la estimación del número de cuentas para un yacimiento que se encuentra a 1.1 km de la mina?
+Para calcular el error asociado a tu modelo en la estimación del número de cuentas para un yacimiento que se encuentra a 1.1 km de la mina, primero obtendrías la estimación del número de cuentas utilizando la ecuación de regresión lineal. Luego, restarías esta estimación del valor real del número de cuentas en ese yacimiento para obtener el error. Este error representaría la discrepancia entre la predicción de tu modelo y el valor real observado.
+
+#13 -  ¿Cómo calcularías los residuos del modelo dado los siguientes datos?
+```{r}
+# Datos
+cuentas <- c(6, 98, 40, 94, 31, 5, 8, 10)
+predicciones <- c(-6.682842, 85.520196, 28.938591, 84.216973, 53.69983, 19.924631, 28.504183, -2.121561)
+
+# Calcular residuos
+residuos <- cuentas - predicciones
+
+# Mostrar los residuos
+print(residuos)
+```
+#14 - Con los datos residuales, verifica si se cumple (o no) el supuesto de normalidad.
+```{r}
+# Prueba de normalidad (por ejemplo, prueba de Shapiro-Wilk)
+shapiro.test(residuos)
+
+# Gráfico de densidad de los residuos
+plot(density(residuos), main = "Densidad de los Residuos", xlab = "Residuos", ylab = "Densidad")
+```
+#15 - ¿Que 2 de conjuntos (de datos) se han de emplear en la modelización lineal? ¿Cómo llevarías a cabo la preparación de estos?
+
+       En la modelización lineal, generalmente se trabajan con dos conjuntos de datos:
+- Conjunto de datos de variables independientes (predictoras): Este conjunto incluye las variables que se utilizan para predecir o explicar la variable dependiente. Estas variables pueden ser numéricas o categóricas, y se representan como 
+X en la ecuación de regresión.
+- Conjunto de datos de la variable dependiente (respuesta): Este conjunto incluye los valores de la variable que se está tratando de predecir o explicar. Se representa como 
+Y en la ecuación de regresión.
+
+      Para preparar estos conjuntos de datos:
+*Limpia los datos: Elimina valores atípicos y errores.
+Selecciona variables relevantes: Elige las variables que tengan una relación con la variable dependiente.
+*Codifica variables categóricas: Transforma las variables categóricas en un formato adecuado.
+*Divide los datos: Separa los datos en conjuntos de entrenamiento y prueba.
+*(Opcionalmente) Estandariza las variables: Ajusta las escalas de las variables si es necesario para mejorar la convergencia del modelo.
+
+#16 - Evalúa la capacidad predictiva del modelo implementando una validación cruzada simple.
+```{r}
+# Cargar el paquete DAAG
+library(DAAG)
+
+# Definir el número de folds para la validación cruzada
+k <- 5
+
+# Realizar la validación cruzada
+cv_results <- cv.lm(data = data_1_, m = regression, mfun = lm, k = k)
+
+# Mostrar los resultados de la validación cruzada
+print(cv_results)
+```
+#17 - Si mis coeficientes de regresión se han calculado con un intervalo de confianza del 95% ¿cuál será la probabilidad de que la correlación lineal entre los coeficientes de regresión y la variable de respuesta o explicada se deba al azar? ¿Y si tengo un nivel de significación (Alpha) de 0.01, con que Intervalo de Confianza he obtenido mis coeficientes de regresión?
+El intervalo de confianza del 95% para los coeficientes de regresión indica que hay un 95% de probabilidad de que el verdadero valor del coeficiente de regresión esté dentro de ese intervalo. Esto significa que solo hay un 5% de probabilidad de que el valor del coeficiente de regresión esté fuera de ese intervalo y, por lo tanto, sea considerado como significativamente diferente.
+
+Si consideramos la correlación lineal entre los coeficientes de regresión y la variable de respuesta, esta correlación se consideraría significativa si el valor p asociado a la correlación es menor que el nivel de significancia (Alpha). Si Alpha es 0.01, significa que solo hay un 1% de probabilidad de que la correlación entre los coeficientes de regresión y la variable de respuesta se deba al azar.
+
+Respecto al intervalo de confianza de los coeficientes de regresión, si tienes un nivel de significancia (Alpha) de 0.01, significa que estás calculando un intervalo de confianza del 99%. Esto se debe a que Alpha representa el nivel de significancia, que es complementario al nivel de confianza. Por lo tanto, si Alpha es 0.01, el nivel de confianza es 1 - 0.01 = 0.99, lo que corresponde a un intervalo de confianza del 99%.
+
+#18 - Si las estimaciones arrojadas por mi modelo lineal resultan menos precisas (mayor error) en un determinado rango de valores con respecto a otro, decimos ¿qué hay indicios de homocedasticidad o heterocedasticidad?
+Cuando las estimaciones de un modelo lineal son menos precisas en ciertos rangos de valores de la variable independiente en comparación con otros, esto sugiere la presencia de heterocedasticidad en los datos. 
+
+La heterocedasticidad se refiere a la variabilidad desigual de los errores del modelo a lo largo de los valores de la variable independiente. En otras palabras, los errores pueden ser más grandes en un rango de valores de la variable independiente y más pequeños en otro. Esto puede ocurrir cuando la varianza de los errores no es constante a lo largo de los valores de la variable independiente.
+
+Por el contrario, si las estimaciones son igualmente precisas en todos los rangos de valores de la variable independiente, entonces se dice que hay homocedasticidad, lo que significa que la varianza de los errores es constante en todos los niveles de la variable independiente.
+
+#19 - ¿Qué medida de precisión estadística nos indica el % de variabilidad explicada de la variable dependiente por nuestro modelo lineal?
+El coeficiente de determinación (\( R^2 \)) es una medida que indica el porcentaje de variabilidad explicada por el modelo lineal en la variable dependiente. Un valor más cercano a 1 indica un mejor ajuste del modelo a los datos, mientras que un valor más cercano a 0 indica un ajuste deficiente.
+
+#20 - Explica la diferencia entre una observación atípica y una observación que produzca lo que se conoce en estadística como “apalancamiento” del modelo?
+Una observación atípica es un punto de datos que se aparta significativamente del resto de los datos en términos de su valor en la variable dependiente. Estas observaciones pueden surgir debido a errores de medición, entrada de datos incorrecta o eventos inusuales en el proceso que se está estudiando. Las observaciones atípicas pueden distorsionar los resultados del modelo y sesgar las estimaciones de los parámetros.
+
+Por otro lado, una observación de alto apalancamiento es un punto de datos con valores inusuales en una o más variables independientes. Estas observaciones pueden influir en gran medida en la estimación de la línea de regresión y, por lo tanto, en los parámetros del modelo. Aunque no son necesariamente atípicas en términos de su valor en la variable dependiente, las observaciones de alto apalancamiento pueden tener un impacto desproporcionado en el modelo debido a su posición inusual en el espacio de las variables independientes.
+
+En resumen, mientras que las observaciones atípicas destacan por valores inusuales en la variable dependiente, las observaciones de alto apalancamiento lo hacen por valores inusuales en las variables independientes. Ambos tipos de observaciones pueden afectar los resultados del modelo de regresión, aunque de diferentes maneras.
+
+

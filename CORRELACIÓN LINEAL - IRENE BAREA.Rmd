@@ -1,0 +1,145 @@
+---
+title: "Correlacion Lineal"
+author: "irene"
+date: "2024-03-16"
+output: html_document
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = TRUE}
+library(readxl)
+data <- as.data.frame(read_excel("C:\Users\Usuario\Downloads\data.xls"))
+View(data)
+print(data)
+```
+#1 - Define brevemente el concepto de correlación lineal. 
+#La correlación lineal es una medida estadística que describe la relación lineal
+#entre dos variables. Indica la fuerza y dirección de la relación entre las 
+#variables, donde un valor cercano a +1 indica una correlación positiva perfecta, 
+#un valor cercano a -1 indica una correlación negativa perfecta, y un valor
+#cercano a 0 indica una falta de correlación lineal.
+
+#2 - ¿Por qué decimos que la correlación lineal es una prueba de correlación 
+#paramétrica? ¿En qué se diferencian las pruebas paramétricas de las no paramétricas?
+#Las pruebas paramétricas, como la correlación lineal, se basan en suposiciones
+#específicas sobre la distribución de los datos, como la normalidad.
+#Las pruebas no paramétricas no requieren estas suposiciones y son más flexibles 
+#en cuanto al tipo de datos que pueden analizar.
+
+#3 -  Calcula la correlación entre las variables almacenadas en la tabla ‘data’.
+```{r, echo = TRUE}
+correlation_matrix <- cor(data)
+print(correlation_matrix)
+```
+#4 -  Calcula los coeficientes de correlación de las variables junto con el nivel de 
+#significancia (p-value)en 1 solo gráfico. Interpreta los resultados.
+```{r, echo = TRUE}
+panel.cor &lt;- function(x, y, digits = 2, prefix = &quot;&quot;, cex.cor, ...) {
+usr &lt;- par(&quot;usr&quot;)
+on.exit(par(usr))
+par(usr = c(0, 1, 0 ,1))
+Cor &lt;- abs(cor(x, y))
+txt &lt;- paste0(prefix, format(c(Cor, 0.123456789), digits = digits)[1])
+if(missing(cex.cor)) {
+cex.cor &lt;- 0.4 / strwidth(txt)}
+text(0.5, 0.5, txt,
+cex = 1 + cex.cor*Cor)}
+```
+```{r, echo = TRUE}
+pairs(data,
+upper.panel = panel.cor, 
+lower.panel = panel.smooth)
+```
+#5 - Emplea una función para obtener en una matriz de correlación lineal, IC 95% y p-value de todas las variables en el data frame ‘data’.
+```{r, echo = TRUE}
+library(correlation)
+matrix <- correlation(data)
+```
+#6 - Visualiza gráficamente la correlación lineal existente entre las variables ‘longitud’ y ‘peso’.
+```{r, echo = TRUE}
+library(ggpubr)
+library(ggplot2)
+ggscatter(data, x = &quot;altura&quot;, y = &quot;peso&quot;,
+add = &quot;reg.line&quot;, conf.int = TRUE,
+cor.coef = TRUE, cor.method = &quot;pearson&quot;,
+xlab = &quot;altura piezas (mm)&quot;, ylab = &quot;peso piezas (mg)&quot;)
+```
+#7 - Emplea la librería `corrplot()` para visualizar la correlación entre variables.
+```{r, echo = TRUE}
+library(corrplot)
+corrplot(cor(data))
+```
+#8 - A partir de la siguiente secuencia de valores numéricos:
+#       • Distancia (km): 1.1,100.2,90.3,5.4,57.5,6.6,34.7,65.8,57.9,86.1
+#       • Número de cuentas (valor absoluto): 110,2,6,98,40,94,31,5,8,10
+#  a. Crea 2 vectores: 'distancia' y 'n_piezas' para almacenarlos en un data frame
+```{r, echo = TRUE}
+distancia <- c( 1.1,100.2,90.3,5.4,57.5,6.6,34.7,65.8,57.9,86.1)
+n_piezas <- c(110,2,6,98,40,94,31,5,8,10)
+datos_b <- data.frame(distancia, n_piezas)
+print(datos_b)
+```
+#  b. Calcula el coeficiente de correlación
+```{r, echo = TRUE}
+correlacion_datos_b <- cor(datos_b)
+print(correlacion_datos_b)
+```
+#  c. Calcula el nivel de significancia
+```{r, echo = TRUE}
+significancia_datos_b <- cor.test(datos_b$distancia,
+datos_b$n_piezas)$p.value
+print(significancia_datos_b)
+```
+#  d. Calcula el Intervalo de confianza al 95% en relación con el coeficiente de correlación
+```{r, echo = TRUE}
+intervaloconfianza_datos_b <- cor.test(datos_b$distancia,
+datos_b$n_piezas)$conf.int
+print(intervaloconfianza_datos_b)
+```
+#  e. ¿Qué intensidad y dirección presentan ambas variables?
+#La intensidad de la relación es perfecta y positiva, lo que significa que hay una asociación lineal perfecta entre las dos variables y que aumentan juntas en la misma proporción.
+
+#  f. ¿Es significativa esta relación?
+#La relación entre las variables es altamente significativa, lo que sugiere que es poco probable que se deba al azar.
+
+#  g. Resulta apropiado afirmar la correlación (o no) entre variables con un tamaño muestral tan reducido (n=10).
+#Con un tamaño de muestra tan pequeño (n=10), hay limitaciones significativas en la capacidad para detectar correlaciones significativas entre variables. Los resultados pueden ser menos confiables debido al bajo poder estadístico y la mayor variabilidad. Además, los valores atípicos pueden tener un impacto desproporcionado en los resultados. Por lo tanto, se debe interpretar con cautela cualquier correlación encontrada en muestras tan pequeñas.
+
+
+#9 - Explícame con un ejemplo en R la diferencia entre una relación lineal y monótona entre 2 variables
+
+```{r, echo = TRUE}
+# Gnerar datos para una relación lineal
+set.seed(123)
+x <- seq(1, 10, by = 1)
+y_lineal <- 2 * x + rnorm(length(x), mean = 0, sd = 2)
+
+# Visualizar la relación lineal
+plot(x, y_lineal, main = "Relación Lineal", xlab = "x", ylab = "y")
+abline(lm(y_lineal ~ x), col = "red")  # Ajuste de la línea de regresión lineal
+
+# Generar datos para una relación monótona
+y_monotona <- runif(length(x), min = 0, max = 10)
+y_monotona <- sort(y_monotona)
+
+# Visualizar la relación monótona
+plot(x, y_monotona, main = "Relación Monótona", xlab = "x", ylab = "y")
+```
+#10 -  ¿Qué tipo de prueba de correlación se aplica a las variables que experimentan una relación monótona? Expón un ejemplo en R.
+# Cuando las variables experimentan una relación monótona, es común utilizar la prueba de correlación de Spearman o la prueba de correlación de Kendall. Estas pruebas son adecuadas para detectar la presencia de una relación monótona entre dos variables sin asumir necesariamente linealidad.
+```{r, echo = TRUE}
+# Generar datos para una relación monótona
+set.seed(123)
+x <- seq(1, 10, by = 1)
+y_monotona <- runif(length(x), min = 0, max = 10)
+y_monotona <- sort(y_monotona)
+
+# Calcular la correlación de Spearman
+cor_spearman <- cor.test(x, y_monotona, method = "spearman")
+
+# Mostrar los resultados
+print(cor_spearman)
+```
